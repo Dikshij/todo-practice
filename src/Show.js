@@ -6,8 +6,8 @@ class Show extends React.Component {
       <div>
         {this.props.list.map((task) => {
           return (
-            <div>
-              <h1 key={task.id}>
+            <div key={task.id}>
+              <h1>
                 {task.task}
                 {task.id}
               </h1>
