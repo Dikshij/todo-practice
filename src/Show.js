@@ -11,8 +11,8 @@ class Show extends React.Component {
                 {task.task}
                 {task.id}
               </h1>
-              <button>Edit</button>
               <button onClick={() => this.props.delete(task.id)}>Delete</button>
+              <button onClick={() => this.props.edit(task.id)}>Edit</button>
             </div>
           );
         })}
