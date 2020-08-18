@@ -7,10 +7,7 @@ class Show extends React.Component {
         {this.props.list.map((task) => {
           return (
             <div key={task.id}>
-              <h1>
-                {task.task}
-                {task.id}
-              </h1>
+              <h1>{task.task}</h1>
               <button onClick={() => this.props.delete(task.id)}>Delete</button>
               <button onClick={() => this.props.edit(task.id)}>Edit</button>
             </div>

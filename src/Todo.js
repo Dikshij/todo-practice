@@ -19,9 +19,10 @@ class Todo extends React.Component {
   saveChange = (event) => {
     event.preventDefault();
     this.setState({
+      id: this.state.id + 1,
       taskArray: [
         ...this.state.taskArray,
-        { task: this.state.task, id: this.state.taskArray.length + 1 }
+        { task: this.state.task, id: this.state.id }
       ],
       task: ""
     });
@@ -35,11 +36,13 @@ class Todo extends React.Component {
   };
 
   setUpEditTodo = (id) => {
+    console.log(id);
     const todo = this.state.taskArray.find((task) => task.id === id);
+
     this.setState({
       isEditing: true,
-      editId: id,
-      task: todo.value
+      task: todo.task,
+      editId: id
     });
   };
 
@@ -47,36 +50,40 @@ class Todo extends React.Component {
     event.preventDefault();
     const tempArray = this.state.taskArray;
     const index = this.state.taskArray.findIndex(
-      (task) => task.taskId === this.state.editId
+      (task) => task.id === this.state.editId
     );
 
-    tempArray[index] = { ...tempArray[index], value: this.state.value };
+    tempArray[index] = { ...tempArray[index], task: this.state.task };
 
     this.setState({
       taskArray: tempArray,
       isEditing: false,
-      task: ""
+      task: "",
+      editId: ""
     });
   };
   render() {
-    console.log(this.state.taskArray);
+    console.log(this.state);
     return (
       <div>
         <h1>Todo tasks</h1>
-        <form onSubmit={this.isEditing ? this.editTodo : this.saveChange}>
+        <form onSubmit={this.state.isEditing ? this.editTodo : this.saveChange}>
           <input
             type="text"
+            name="task"
             placeholder="enter task"
             onChange={this.handleChange}
             value={this.state.task}
           ></input>
-          <button type="submit">Add Task</button>
-          <Show
-            list={this.state.taskArray}
-            delete={this.deleteTask}
-            edit={this.setUpEditTodo}
-          ></Show>
+          <button type="submit">
+            {this.state.isEditing ? "Editing" : "add"}
+          </button>
         </form>
+        <Show
+          list={this.state.taskArray}
+          delete={this.deleteTask}
+          edit={this.setUpEditTodo}
+        ></Show>
       </div>
     );
   }
